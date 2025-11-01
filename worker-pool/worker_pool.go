@@ -33,3 +33,31 @@ func worker(id int, jobs <-chan int, results chan<- int) {
 		results <- result
 	}
 }
+
+func ProcessJobs(numWorkers int, jobs []int) []int {
+	jobCh := make(chan int, len(jobs))
+	resultCh := make(chan int, len(jobs))
+
+	for w := 0; w < numWorkers; w++ {
+		go func() {
+			for job := range jobCh {
+				resultCh <- job * 2
+			}
+		}()
+	}
+
+	// 작업 보내기
+	for _, job := range jobs {
+		jobCh <- job
+	}
+
+	close(jobCh)
+
+	results := make([]int, 0, len(jobs))
+
+	for i := 0; i < len(jobs); i++ {
+		results = append(results, <-resultCh)
+	}
+
+	return results
+}
