@@ -1,6 +1,8 @@
 package main
 
-func main() {
+import "testing"
+
+func TestMutex(t *testing.T) {
 	var mu SpinMutex
 	counter := 0
 
