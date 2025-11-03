@@ -21,3 +21,11 @@ func TestTimeoutWithDuration_Timeout(t *testing.T) {
 		t.Errorf("expected '타임아웃!', got '%s'", result)
 	}
 }
+
+func TestFirstResponse(t *testing.T) {
+	result := FirstResponse()
+
+	if result != "server 1" {
+		t.Errorf("expected '서버1 응답', got '%s'", result)
+	}
+}
